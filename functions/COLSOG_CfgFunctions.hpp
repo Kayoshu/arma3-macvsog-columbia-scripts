@@ -60,6 +60,7 @@ class COLSOG {
     {
         file ="functions\day-and-night";
         class startCycle {};
+        class skipToFirstLight {postInit = 1;};
     }
     class Stabo
     {

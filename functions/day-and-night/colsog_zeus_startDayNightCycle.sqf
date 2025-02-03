@@ -17,33 +17,8 @@ private _onConfirm = {
     _dialogResult params ["_activateCycle", "_dawnNotUsed", "_dawnTimeAcceleration", "_dayTimeAcceleration", "_duskNotUsed", "_duskTimeAcceleration", "_nightTimeAcceleration", "_skiptofirstlight"];
 
     if (_skiptofirstlight) then {
-        // spawn date change to _dawnTime
-        [ 
-            [_dawnTime], {
-            
-                params ["_dawnTime"];
-
-                private _idLayer1 = ["Text1Display"] call BIS_fnc_rscLayer;
-                _idLayer1 cutText ["", "BLACK OUT", 1];
-                uiSleep 1;
-
-                date params ["_year", "_month", "_day", "_hours", "_minutes"];
-
-                if (_hours > 12) then {
-                    _day = _day + 1;
-                };
-
-                _hours = floor _dawnTime;
-                _minutes = round ((_dawnTime - (floor _dawnTime)) * 60);
-                _minutes = _minutes - 3; // substract 3min so night/dawn feedback can trigger
-
-                setDate [_year, _month, _day, _hours, _minutes]; // shitty performance rework with CBA server event
-
-                uiSleep 4;
-                _idLayer1 cutText ["", "BLACK IN", 1];
-
-            }
-        ] remoteExecCall ["spawn", 0, false];
+        // raise COLSOG_skipToFirstLight CBA_globalevent
+        ["COLSOG_skipToFirstLight", [_dawnBeforeTime]] call CBA_fnc_globalEvent;
     };
 
     if ((missionNamespace getVariable "colsog_dayAndNight_dawnTimeAcceleration") != _dawnTimeAcceleration) then {
