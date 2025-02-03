@@ -13,7 +13,7 @@
 
 private _skipFirstLightid = ["COLSOG_skipToFirstLight", {
 	
-	params [[]"_dawnBeforeTime", -1]];
+	params [["_dawnBeforeTime", -1]];
 	
 	// exclude zeus
 	if (!isNull (getAssignedCuratorLogic player)) exitWith {};
